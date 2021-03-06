@@ -131,8 +131,8 @@ const removeVideoModal = {
         this.removeVideoModal();
     },
     removeVideoModal() {
+        let btn = $(".solution__img-video");
         if ($(window).width() < 425) {
-            let btn = $(".solution__img-video");
             btn.attr("data-toggle", "");
             btn.attr("data-target", "");
         } else {
