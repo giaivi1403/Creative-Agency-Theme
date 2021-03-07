@@ -10,6 +10,7 @@ $(document).ready(() => {
     scrollToTop.init();
     headerFixed.init();
     removeVideoModal.init();
+    menuMobile.init();
 });
 
 const owlSlider = {
@@ -139,5 +140,77 @@ const removeVideoModal = {
             btn.attr("data-toggle", "modal");
             btn.attr("data-target", "#video");
         }
+    },
+};
+
+const menuMobile = {
+    init() {
+        this.menuMobile();
+    },
+    menuMobile() {
+        let btn = $(".menu-mobile__btn-item");
+        let menu = $(".menu-mobile__list");
+        let overlay = $(".menu-mobile__overlay");
+        let btnSub = $(".menu-mobile__list-item .item__link");
+        btn.click(function (e) {
+            e.preventDefault();
+            $(this).parent().find(".menu-mobile__overlay").toggle();
+            menu.toggleClass("active");
+            menu.css({ height: "210px" });
+            menu.slideToggle("fast");
+            $("body").addClass("modal-open");
+            if (!menu.hasClass("active")) {
+                $("body").removeClass("modal-open");
+                let item = menu.find(".menu-mobile__list-item");
+                item.find(".submenu-mobile__list").removeClass("active");
+                if (item.hasClass("active")) {
+                    item.removeClass("active");
+                    item.find(".item__link").find("i").removeClass("active");
+                    item.find(".submenu-mobile__list").slideUp("fast");
+                }
+            }
+        });
+        btnSub.click(function (e) {
+            e.preventDefault();
+            let subMenu = $(this).parent().find(".submenu-mobile__list");
+            let allSubMenu = $(".submenu-mobile__list");
+            subMenu.toggleClass("active");
+            $(this).find("i").toggleClass("active");
+            $(this).parent().toggleClass("active");
+            if (subMenu) {
+                if (subMenu.hasClass("active")) {
+                    subMenu.slideToggle("fast");
+                    menu.css({ height: "450px" });
+                } else {
+                    subMenu.slideToggle("fast");
+                }
+            }
+            var checked = true;
+            allSubMenu.each((i, item) => {
+                if ($(item).hasClass("active")) {
+                    checked = false;
+                }
+            });
+            if (checked) {
+                menu.css({ height: "" });
+            }
+        });
+        overlay.click(function (e) {
+            menu.removeClass("active");
+            menu.css({ height: "" });
+            menu.slideToggle("fast");
+            overlay.toggle();
+            $("body").removeClass("modal-open");
+            if (!menu.hasClass("active")) {
+                $("body").removeClass("modal-open");
+                let item = menu.find(".menu-mobile__list-item");
+                if (item.hasClass("active")) {
+                    item.removeClass("active");
+                    item.find(".item__link").find("i").removeClass("active");
+                    item.find(".submenu-mobile__list").slideUp("fast");
+                    item.find(".submenu-mobile__list").removeClass("active");
+                }
+            }
+        });
     },
 };
