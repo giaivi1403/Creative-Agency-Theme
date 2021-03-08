@@ -4,6 +4,7 @@
 
 /*----------------------------Menu Table -----------------------*/
 $(document).ready(() => {
+    new WOW().init();
     owlSlider.init();
     scrollDown.init();
     portfolioGrid.init();
@@ -11,6 +12,7 @@ $(document).ready(() => {
     headerFixed.init();
     removeVideoModal.init();
     menuMobile.init();
+    headerFixedWow.init();
 });
 
 const owlSlider = {
@@ -111,14 +113,14 @@ const headerFixed = {
             if (pos > 80) {
                 header.css({
                     position: "fixed",
-                    "max-height": `${height}px`,
+                    "min-height": `${height}px`,
                     "background-color": "#000",
                     transition: "background-color 0.5s ease",
                 });
             } else if (pos < 20) {
                 header.css({
                     position: "absolute",
-                    "max-height": `${height + 3}px`,
+                    "min-height": `${height + 3}px`,
                     "background-color": "transparent",
                     transition: "",
                 });
@@ -210,6 +212,20 @@ const menuMobile = {
                     item.find(".submenu-mobile__list").slideUp("fast");
                     item.find(".submenu-mobile__list").removeClass("active");
                 }
+            }
+        });
+    },
+};
+
+const headerFixedWow = {
+    init() {
+        this.headerFixedWow();
+    },
+    headerFixedWow() {
+        $(window).on("load", () => {
+            let header = $(".header__navbar");
+            if ($(window).scrollTop() > 20) {
+                header.addClass("animated appear");
             }
         });
     },
